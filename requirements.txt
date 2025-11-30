@@ -1,0 +1,8 @@
+# Web UI Interface (Version explicitly requested)
+gradio==3.41.2
+
+# HTTP Client for communicating with LM Studio/Ollama
+requests>=2.28.0
+
+# Image processing (Used in parse_character_card for PNG metadata)
+Pillow>=9.0.0

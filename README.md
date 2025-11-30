@@ -48,13 +48,14 @@ The agent can utilize the following tools to interact with your system:
 * Git.
 
 ### 2. Setup Script
-bash
+```
 # Clone the repository
-```git clone [https://github.com/your-username/local-code-agent.git](https://github.com/your-username/local-code-agent.git)
-cd local-code-agent```
+git clone [https://github.com/NoxCreations/local-code-agent.git](https://github.com/NoxCreations/local-code-agent.git)
+cd local-code-agent
 
 # Install Python dependencies
-```pip install -r requirements.txt```
+pip install -r requirements.txt
+```
 
 🔌 Connecting a Backend (LLM Provider)
 
@@ -85,6 +86,7 @@ Best for: Windows/Mac users, ease of use, and visual management.
         GPU Offload: Maximize this slider.
 
     Click Start Server.
+    No endpoint change in script, its designed to use LM Studio as a backend.
 
 Option B: Ollama
 
@@ -93,15 +95,14 @@ Best for: Linux users or command-line preference.
     Install Ollama.
 
     Pull a coding-capable model:
-    Bash
-
+    
     ollama pull qwen2.5-coder:7b
 
     Configuration:
 
         Ollama runs on port 11434 by default.
 
-        You may need to edit local_code_agent.py to change API_BASE_URL to http://localhost:11434/v1.
+        Edit local_code_agent.py to change API_BASE_URL to http://localhost:11434/v1.
 
 Option C: LocalAI
 
@@ -121,13 +122,12 @@ Best for: Docker enthusiasts and CPU-only setups.
     Ensure your LLM backend is running.
 
     Run the agent:
-    Bash
 
-    ```python local_code_agent.py```
+```python local_code_agent.py```
 
-                  OR
+OR
 
-    ```python local_code_agent.py --webui```
+```python local_code_agent.py --webui```
 
 
 
@@ -151,7 +151,7 @@ Best for: Docker enthusiasts and CPU-only setups.
 ### 2. Dockerfile
 Create a file named `Dockerfile` in the project root:
 
-```dockerfile
+```
 FROM python:3.10-slim
 
 # Install system tools and Tailscale
@@ -174,12 +174,13 @@ EXPOSE 7860
 COPY start.sh .
 RUN chmod +x start.sh
 CMD ["./start.sh"]
+```
 
 3. Start Script (start.sh)
 
 Create a file named start.sh:
-Bash
 
+```
 #!/bin/bash
 
 # Start Tailscale in userspace mode if AUTH KEY is provided
@@ -193,6 +194,7 @@ fi
 # Run the Agent
 # Note: Ensure local_code_agent.py is configured to point to '[http://host.docker.internal:1234/v1](http://host.docker.internal:1234/v1)'
 python local_code_agent.py
+```
 
 4. Running the Container
 
@@ -201,11 +203,13 @@ Bash
 
 docker build -t local-code-agent .
 
+```
 docker run -d \
   --name code-agent \
   --add-host=host.docker.internal:host-gateway \
   -e TS_AUTHKEY=tskey-auth-YOUR-KEY-HERE \
   local-code-agent
+```
 
 ⚠️ OPTIONAL: Public Exposure via VPS (OVH/IONOS)
 
